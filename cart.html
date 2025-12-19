@@ -39,7 +39,8 @@
                         </tr>
                     </thead>
                     <tbody id="cart-table-body">
-                        </tbody>
+                        <!-- Товары будут здесь -->
+                    </tbody>
                 </table>
 
                 <div class="cart-total-section">
@@ -56,6 +57,7 @@
 
     <footer><p>&copy; 2025 Магазин электроники "ТехноМир".</p></footer>
 
+    <!-- Модальное окно авторизации -->
     <div id="auth-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -81,6 +83,7 @@
         </div>
     </div>
 
+    <!-- Модальное окно оформления заказа -->
     <div id="buy-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -88,21 +91,25 @@
             <form id="buy-form">
                 
                 <div class="form-group">
-                    <label for="buy-name" style="color: #ccc; font-size: 0.9em; margin-bottom: 5px; display: block;">Ваше имя</label>
+                    <label for="buy-name" style="color: #ccc; font-size: 0.9em; margin-bottom: 5px; display: block;">Ваше имя *</label>
                     <input type="text" id="buy-name" class="auth-input" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="buy-phone" style="color: #ccc; font-size: 0.9em; margin-bottom: 5px; display: block;">Ваш телефон</label>
+                    <label for="buy-phone" style="color: #ccc; font-size: 0.9em; margin-bottom: 5px; display: block;">Ваш телефон *</label>
                     <input type="tel" id="buy-phone" class="auth-input" placeholder="+7 (___) ___-__-__" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="buy-comment" style="color: #ccc; font-size: 0.9em; margin-bottom: 5px; display: block;">Комментарий (адрес, удобное время)</label>
-                    <textarea id="buy-comment" class="auth-input" rows="4"></textarea>
+                    <label for="buy-comment" style="color: #ccc; font-size: 0.9em; margin-bottom: 5px; display: block;">
+                        Комментарий к заказу (адрес доставки, удобное время, пожелания)
+                    </label>
+                    <textarea id="buy-comment" class="auth-input" rows="4" 
+                              placeholder="Например: Адрес: г. Москва, ул. Пушкина, д.10, кв.5. Время: после 18:00. Пожелания: позвоните перед выездом."></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn green-btn">Оформить заказ</button>
+                <p style="color: #888; font-size: 0.8em; margin-top: 10px;">* — обязательные поля</p>
             </form>
         </div>
     </div>
