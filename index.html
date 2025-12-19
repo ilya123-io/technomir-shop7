@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ТехноМир - Магазин электроники | Apple, Samsung, Sony, Dyson</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="Логотип ТехноМир">
+            <span>ТехноМир</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Главная</a></li>
+                <li><a href="contact.html">Контакты</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="cart.html" id="cart-btn-link">Корзина <span id="cart-count">0</span></a>
+                <button id="auth-btn">Войти</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Технологии будущего</h1>
+                <p>Откройте для себя мир инноваций с "ТехноМир"</p>
+                <a href="#catalog" class="hero-button">Перейти в каталог</a>
+            </div>
+        </section>
+
+        <div class="container">
+            <h2 id="catalog">Наши товары</h2>
+            <p class="catalog-description">Только оригинальная техника с официальной гарантией</p>
+            
+            <div class="product-grid">
+                
+                <div class="product-card">
+                    <span class="badge">Новинка</span>
+                    <a href="smartphone.html" class="product-image-link"><img src="images/phone.jpg" alt="iPhone 16 Pro"></a>
+                    <div class="product-card-content">
+                        <h3 class="product-title"><a href="smartphone.html">iPhone 16 Pro</a></h3>
+                        <div class="product-price">109 990 руб.</div>
+                        <button class="add-to-cart-button" data-id="1" data-name="iPhone 16 Pro" data-price="109990">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <a href="notebook.html" class="product-image-link"><img src="images/notebook.jpg" alt="MacBook Pro"></a>
+                    <div class="product-card-content">
+                        <h3 class="product-title"><a href="notebook.html">MacBook Pro 16" (M4)</a></h3>
+                        <div class="product-price">249 990 руб.</div>
+                        <button class="add-to-cart-button" data-id="2" data-name="MacBook Pro 16" data-price="249990">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <a href="gameconsole.html" class="product-image-link"><img src="images/ps5.jpg" alt="PlayStation 5"></a>
+                    <div class="product-card-content">
+                        <h3 class="product-title"><a href="gameconsole.html">PlayStation 5</a></h3>
+                        <div class="product-price">54 990 руб.</div>
+                        <button class="add-to-cart-button" data-id="3" data-name="PlayStation 5" data-price="54990">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge" style="background: linear-gradient(135deg, #ff9966, #ff5e62);">Хит</span>
+                    <a href="smartwatch.html" class="product-image-link"><img src="images/smartwatch.jpg" alt="Apple Watch Ultra 3"></a>
+                    <div class="product-card-content">
+                        <h3 class="product-title"><a href="smartwatch.html">Apple Watch Ultra 3</a></h3>
+                        <div class="product-price">79 990 руб.</div>
+                        <button class="add-to-cart-button" data-id="4" data-name="Apple Watch Ultra 3" data-price="79990">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge">Новинка</span>
+                    <a href="ipad.html" class="product-image-link"><img src="images/ipad.jpg" alt="iPad Pro 13 M4"></a>
+                    <div class="product-card-content">
+                        <h3 class="product-title"><a href="ipad.html">iPad Pro 13" (M4)</a></h3>
+                        <div class="product-price">149 990 руб.</div>
+                        <button class="add-to-cart-button" data-id="5" data-name="iPad Pro 13" data-price="149990">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge">Хит</span>
+                    <a href="airpodspro.html" class="product-image-link"><img src="images/airpodspro.jpg" alt="AirPods Pro 2"></a>
+                    <div class="product-card-content">
+                        <h3 class="product-title"><a href="airpodspro.html">AirPods Pro 2</a></h3>
+                        <div class="product-price">24 990 руб.</div>
+                        <button class="add-to-cart-button" data-id="6" data-name="AirPods Pro 2" data-price="24990">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <a href="tv.html" class="product-image-link"><img src="images/tv.jpg" alt="Samsung Neo QLED"></a>
+                    <div class="product-card-content">
+                        <h3 class="product-title"><a href="tv.html">Samsung Neo QLED 55"</a></h3>
+                        <div class="product-price">129 990 руб.</div>
+                        <button class="add-to-cart-button" data-id="7" data-name="Samsung Neo QLED 55" data-price="129990">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <a href="dyson.html" class="product-image-link"><img src="images/dyson.jpg" alt="Dyson Airstrait"></a>
+                    <div class="product-card-content">
+                        <h3 class="product-title"><a href="dyson.html">Dyson Airstrait</a></h3>
+                        <div class="product-price">49 990 руб.</div>
+                        <button class="add-to-cart-button" data-id="8" data-name="Dyson Airstrait" data-price="49990">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <a href="monitor.html" class="product-image-link"><img src="images/monitor.jpg" alt="Apple Studio Display"></a>
+                    <div class="product-card-content">
+                        <h3 class="product-title"><a href="monitor.html">Apple Studio Display</a></h3>
+                        <div class="product-price">159 990 руб.</div>
+                        <button class="add-to-cart-button" data-id="9" data-name="Apple Studio Display" data-price="159990">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <a href="pencil.html" class="product-image-link"><img src="images/pencil.jpg" alt="Apple Pencil"></a>
+                    <div class="product-card-content">
+                        <h3 class="product-title"><a href="pencil.html">Apple Pencil (2-gen)</a></h3>
+                        <div class="product-price">11 990 руб.</div>
+                        <button class="add-to-cart-button" data-id="10" data-name="Apple Pencil (2-gen)" data-price="11990">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <a href="ps5.html" class="product-image-link"><img src="images/ps5_card.jpg" alt="DualSense Controller"></a>
+                    <div class="product-card-content">
+                        <h3 class="product-title"><a href="ps5.html">Контроллер DualSense</a></h3>
+                        <div class="product-price">7 490 руб.</div>
+                        <button class="add-to-cart-button" data-id="11" data-name="Контроллер DualSense" data-price="7490">В корзину</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <a href="headphones.html" class="product-image-link"><img src="images/headphones.jpg" alt="AirPods Max"></a>
+                    <div class="product-card-content">
+                        <h3 class="product-title"><a href="headphones.html">AirPods Max</a></h3>
+                        <div class="product-price">54 990 руб.</div>
+                        <button class="add-to-cart-button" data-id="12" data-name="AirPods Max" data-price="54990">В корзину</button>
+                    </div>
+                </div>
+
+            </div>
+            
+            <section class="features">
+                <h2>Почему выбирают нас?</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3>🚚 Быстрая доставка</h3>
+                        <p>Доставка по городу за 2 часа</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>✅ Гарантия качества</h3>
+                        <p>Только официальная техника</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🛠️ Сервис и поддержка</h3>
+                        <p>Собственный сервисный центр</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Магазин электроники "ТехноМир". Все права защищены.</p>
+    </footer>
+
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="auth-title" class="auth-title">Вход в аккаунт</h2>
+            <form id="login-form">
+                <div class="input-wrapper" id="name-wrap" style="display: none;">
+                    <input type="text" id="reg-name" class="auth-input" placeholder="Ваше Имя">
+                </div>
+
+                <div class="input-wrapper">
+                    <input type="email" id="email" class="auth-input" placeholder="Email" required>
+                </div>
+                <div class="input-wrapper">
+                    <input type="password" id="password" class="auth-input" placeholder="Пароль" required>
+                </div>
+                
+                <div class="input-wrapper" id="confirm-password-wrap" style="display: none;">
+                    <input type="password" id="confirm-password" class="auth-input" placeholder="Подтвердите пароль">
+                </div>
+
+                <div class="auth-links">
+                    <a href="#" id="toggle-auth" class="reg-link">Нет аккаунта? Регистрация</a>
+                </div>
+                <button type="submit" id="auth-submit-btn" class="submit-btn">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

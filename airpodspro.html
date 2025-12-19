@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirPods Pro - ТехноМир</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo"><img src="images/logo.png" alt="Логотип"><span>ТехноМир</span></a>
+        <nav><ul><li><a href="index.html">Главная</a></li><li><a href="contact.html">Контакты</a></li></ul><div class="nav-buttons"><a href="cart.html" id="cart-btn-link">Корзина <span id="cart-count">0</span></a><button id="auth-btn">Войти</button></div></nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="product-details">
+                <div class="product-gallery-container">
+                    <div class="main-image-wrapper"><img src="images/airpodspro.jpg" alt="AirPods Main"></div>
+                    <div class="thumbnail-carousel-wrapper">
+                        <button class="carousel-arrow prev">❮</button>
+                        <div class="thumbnails-row">
+                            <div class="thumb-box active"><img src="images/airpodspro.jpg"></div>
+                            <div class="thumb-box"><img src="images/airpodspro2.jpg"></div>
+                            <div class="thumb-box"><img src="images/airpodspro3.jpg"></div>
+                            <div class="thumb-box"><img src="images/airpodspro4.jpg"></div>
+                            <div class="thumb-box"><img src="images/airpodspro5.jpg"></div>
+                        </div>
+                        <button class="carousel-arrow next">❯</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h1>AirPods Pro 2 (USB-C)</h1>
+                    <div class="price-section"><span class="price">24 990 руб.</span></div>
+                    <p>Активное шумоподавление и режим прозрачности.</p>
+                    <ul class="specs-list">
+                        <li><b>Чип:</b> Apple H2</li>
+                        <li><b>Защита:</b> IP54</li>
+                        <li><b>Разъем:</b> USB-C</li>
+                    </ul>
+                    <br>
+                    <button class="add-to-cart-button large" data-id="6" data-name="AirPods Pro 2" data-price="24990">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer><p>&copy; 2025 ТехноМир.</p></footer>
+    <div id="auth-modal" class="modal"><div class="modal-content"><span class="close">&times;</span><h2 id="auth-title" class="auth-title">Вход</h2><form id="login-form"><div class="input-wrapper" id="name-wrap" style="display:none;"><input type="text" id="reg-name" class="auth-input" placeholder="Ваше Имя"></div><div class="input-wrapper"><input type="email" id="email" class="auth-input" placeholder="Email" required></div><div class="input-wrapper"><input type="password" id="password" class="auth-input" placeholder="Пароль" required></div><div class="input-wrapper" id="confirm-password-wrap" style="display:none;"><input type="password" id="confirm-password" class="auth-input" placeholder="Подтвердите пароль"></div><div class="auth-links"><a href="#" id="toggle-auth" class="reg-link">Нет аккаунта? Регистрация</a></div><button type="submit" id="auth-submit-btn" class="submit-btn">Войти</button></form></div></div>
+    <script src="script.js"></script>
+</body>
+</html>

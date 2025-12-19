@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacBook Pro 16 - ТехноМир</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="Логотип ТехноМир">
+            <span>ТехноМир</span>
+        </a>
+        <nav>
+            <ul><li><a href="index.html">Главная</a></li><li><a href="contact.html">Контакты</a></li></ul>
+            <div class="nav-buttons"><a href="cart.html" id="cart-btn-link">Корзина <span id="cart-count">0</span></a><button id="auth-btn">Войти</button></div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="product-details">
+                <div class="product-gallery-container">
+                    <div class="main-image-wrapper"><img src="images/notebook.jpg" alt="Main"></div>
+                    <div class="thumbnail-carousel-wrapper">
+                        <button class="carousel-arrow prev">❮</button>
+                        <div class="thumbnails-row">
+                            <div class="thumb-box active"><img src="images/notebook.jpg"></div>
+                            <div class="thumb-box"><img src="images/notebook2.jpg"></div>
+                            <div class="thumb-box"><img src="images/notebook3.jpg"></div>
+                            <div class="thumb-box"><img src="images/notebook4.jpg"></div>
+                            <div class="thumb-box"><img src="images/notebook5.jpg"></div>
+                        </div>
+                        <button class="carousel-arrow next">❯</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h1>MacBook Pro 16" (M4 Pro) Space Black</h1>
+                    <div class="price-section"><span class="price">249 990 руб.</span></div>
+                    <p>Самый мощный MacBook Pro. Чип M4 Pro для профи.</p>
+                    <ul class="specs-list">
+                        <li><b>Экран:</b> 16.2" Liquid Retina XDR</li>
+                        <li><b>Процессор:</b> Apple M4 Pro</li>
+                        <li><b>Память:</b> 36 ГБ</li>
+                        <li><b>SSD:</b> 1 ТБ</li>
+                    </ul>
+                    <br><button class="add-to-cart-button large" data-id="2" data-name="MacBook Pro 16" data-price="249990">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer><p>&copy; 2025 ТехноМир.</p></footer>
+    <div id="auth-modal" class="modal"><div class="modal-content"><span class="close">&times;</span><h2 id="auth-title" class="auth-title">Вход</h2><form id="login-form"><input type="email" class="auth-input" placeholder="Email"><input type="password" class="auth-input" placeholder="Пароль"><button class="submit-btn">Войти</button></form></div></div>
+    <script src="script.js"></script>
+</body>
+</html>

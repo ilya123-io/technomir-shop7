@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина - ТехноМир</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="Логотип ТехноМир">
+            <span>ТехноМир</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="contact.html">Контакты</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="cart.html" id="cart-btn-link">Корзина <span id="cart-count">0</span></a>
+                <button id="auth-btn">Войти</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Ваша корзина</h1>
+            
+            <div class="cart-page-content">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Товар</th>
+                            <th>Название</th>
+                            <th>Цена</th>
+                            <th>Удалить</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-table-body">
+                        </tbody>
+                </table>
+
+                <div class="cart-total-section">
+                    <span>Итого к оплате:</span>
+                    <span id="cart-total-sum" class="cart-total-price">0 руб.</span>
+                </div>
+
+                <div style="text-align: right; margin-top: 20px;">
+                    <button id="checkout-page-btn" class="submit-btn" style="width: auto; padding: 15px 40px;">ОФОРМИТЬ ЗАКАЗ</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer><p>&copy; 2025 Магазин электроники "ТехноМир".</p></footer>
+
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="auth-title" class="auth-title">Вход</h2>
+            <form id="login-form">
+                <div class="input-wrapper" id="name-wrap" style="display:none;">
+                    <input type="text" id="reg-name" class="auth-input" placeholder="Ваше Имя">
+                </div>
+                <div class="input-wrapper">
+                    <input type="email" id="email" class="auth-input" placeholder="Email" required>
+                </div>
+                <div class="input-wrapper">
+                    <input type="password" id="password" class="auth-input" placeholder="Пароль" required>
+                </div>
+                <div class="input-wrapper" id="confirm-password-wrap" style="display:none;">
+                    <input type="password" id="confirm-password" class="auth-input" placeholder="Подтвердите пароль">
+                </div>
+                <div class="auth-links">
+                    <a href="#" id="toggle-auth" class="reg-link">Нет аккаунта? Регистрация</a>
+                </div>
+                <button type="submit" id="auth-submit-btn" class="submit-btn">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="buy-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="auth-title" style="text-align: left; margin-bottom: 25px;">Оформление заказа</h2>
+            <form id="buy-form">
+                
+                <div class="form-group">
+                    <label for="buy-name" style="color: #ccc; font-size: 0.9em; margin-bottom: 5px; display: block;">Ваше имя</label>
+                    <input type="text" id="buy-name" class="auth-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="buy-phone" style="color: #ccc; font-size: 0.9em; margin-bottom: 5px; display: block;">Ваш телефон</label>
+                    <input type="tel" id="buy-phone" class="auth-input" placeholder="+7 (___) ___-__-__" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="buy-comment" style="color: #ccc; font-size: 0.9em; margin-bottom: 5px; display: block;">Комментарий (адрес, удобное время)</label>
+                    <textarea id="buy-comment" class="auth-input" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn green-btn">Оформить заказ</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
