@@ -81,19 +81,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (toggleAuthLink) {
         toggleAuthLink.addEventListener('click', (e) => {
-            e.preventDefault(); isRegisterMode = !isRegisterMode; updateAuthUI();
+            e.preventDefault(); 
+            isRegisterMode = !isRegisterMode; 
+            updateAuthUI();
         });
     }
 
     function updateAuthUI() {
         if (isRegisterMode) {
-            authTitle.textContent = "Регистрация"; authSubmitBtn.textContent = "Зарегистрироваться"; toggleAuthLink.textContent = "Уже есть аккаунт? Войти";
-            nameWrap.style.display = 'block'; nameInput.required = true;
-            confirmPasswordWrap.style.display = 'block'; confirmPasswordInput.required = true;
+            authTitle.textContent = "Регистрация"; 
+            authSubmitBtn.textContent = "Зарегистрироваться"; 
+            toggleAuthLink.textContent = "Уже есть аккаунт? Войти";
+            nameWrap.style.display = 'block'; 
+            nameInput.required = true;
+            confirmPasswordWrap.style.display = 'block'; 
+            confirmPasswordInput.required = true;
         } else {
-            authTitle.textContent = "Вход"; authSubmitBtn.textContent = "Войти"; toggleAuthLink.textContent = "Нет аккаунта? Регистрация";
-            nameWrap.style.display = 'none'; nameInput.required = false;
-            confirmPasswordWrap.style.display = 'none'; confirmPasswordInput.required = false;
+            authTitle.textContent = "Вход"; 
+            authSubmitBtn.textContent = "Войти"; 
+            toggleAuthLink.textContent = "Нет аккаунта? Регистрация";
+            nameWrap.style.display = 'none'; 
+            nameInput.required = false;
+            confirmPasswordWrap.style.display = 'none'; 
+            confirmPasswordInput.required = false;
         }
     }
 
@@ -117,14 +127,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 let result = await response.json();
                 if (result.success) {
                     if (isRegisterMode) {
-                        alert("Регистрация успешна! Теперь войдите.");
-                        isRegisterMode = false; updateAuthUI();
+                        alert("✅ Регистрация успешна! Теперь войдите.");
+                        isRegisterMode = false; 
+                        updateAuthUI();
                     } else {
                         localStorage.setItem('activeUserName', result.name);
                         location.reload();
                     }
-                } else { alert("Ошибка: " + result.message); }
-            } catch (err) { alert("Ошибка сервера"); }
+                } else { 
+                    alert("❌ Ошибка: " + result.message); 
+                }
+            } catch (err) { 
+                alert("❌ Ошибка сервера"); 
+            }
         });
     }
 
@@ -133,7 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
             authBtn.textContent = 'Выйти'; 
             let greeting = document.getElementById('greeting');
             if (!greeting) {
-                greeting = document.createElement('span'); greeting.id = 'greeting';
+                greeting = document.createElement('span'); 
+                greeting.id = 'greeting';
                 greeting.style.marginRight = "10px";
                 authBtn.parentNode.insertBefore(greeting, authBtn);
             }
@@ -141,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 3. ИСПРАВЛЕННАЯ КОРЗИНА (теперь работает и в карточках!)
+    // 3. КОРЗИНА
     document.querySelectorAll('.add-to-cart-button').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -168,18 +184,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 img = mainImg ? mainImg.src : '';
             }
 
+            // Добавляем товар в корзину
             cart.push({ id, name, price, img });
             localStorage.setItem('technoCart', JSON.stringify(cart));
             updateCartCounter();
 
+            // Анимация подтверждения
             const originalText = btn.innerText;
             btn.innerText = "✓ Добавлено";
             btn.style.background = "#28a745";
-            setTimeout(() => { btn.innerText = originalText; btn.style.background = ""; }, 1000);
+            setTimeout(() => { 
+                btn.innerText = originalText; 
+                btn.style.background = ""; 
+            }, 1000);
         });
     });
 
-    function updateCartCounter() { if(cartCount) cartCount.innerText = cart.length; }
+    function updateCartCounter() { 
+        if(cartCount) cartCount.innerText = cart.length; 
+    }
 
     if (cartTableBody) renderCartPage();
 
@@ -188,35 +211,51 @@ document.addEventListener('DOMContentLoaded', () => {
         cartTableBody.innerHTML = '';
         let total = 0;
         if (cart.length === 0) {
-            cartTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 40px;">Корзина пуста</td></tr>';
+            cartTableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 40px; color: #888;">Корзина пуста</td></tr>';
         } else {
             cart.forEach((item, index) => {
                 total += item.price;
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td style="text-align:center;"><img src="${item.img}" style="width:50px" alt="foto"></td>
-                    <td>${item.name}</td>
+                    <td style="text-align:center;">
+                        <img src="${item.img}" class="cart-img-preview" alt="${item.name}">
+                    </td>
+                    <td><span class="cart-item-name">${item.name}</span></td>
                     <td>${item.price.toLocaleString()} руб.</td>
-                    <td style="text-align:center;"><button class="btn-remove" onclick="removePageCart(${index})">&times;</button></td>
+                    <td style="text-align:center;">
+                        <button class="btn-remove" onclick="removePageCart(${index})">&times;</button>
+                    </td>
                 `;
                 cartTableBody.appendChild(row);
             });
         }
-        if (cartTotalSum) cartTotalSum.innerText = total.toLocaleString();
+        if (cartTotalSum) cartTotalSum.innerText = total.toLocaleString() + ' руб.';
     }
 
     window.removePageCart = function(index) {
-        cart.splice(index, 1);
-        localStorage.setItem('technoCart', JSON.stringify(cart));
-        updateCartCounter();
-        renderCartPage();
+        if (confirm("Удалить товар из корзины?")) {
+            cart.splice(index, 1);
+            localStorage.setItem('technoCart', JSON.stringify(cart));
+            updateCartCounter();
+            renderCartPage();
+        }
     };
 
-    // 4. ОФОРМЛЕНИЕ ЗАКАЗА (Отправка в БД Render - Лабораторная №3)
+    // 4. ОФОРМЛЕНИЕ ЗАКАЗА (исправленная версия)
     if (checkoutPageBtn) {
         checkoutPageBtn.addEventListener('click', () => {
-            if (cart.length === 0) { alert("Корзина пуста!"); return; }
-            if (buyModal) buyModal.style.display = 'block';
+            if (cart.length === 0) { 
+                alert("Корзина пуста! Добавьте товары перед оформлением заказа."); 
+                return; 
+            }
+            if (buyModal) {
+                // Заполняем имя пользователя, если он авторизован
+                const activeUserName = localStorage.getItem('activeUserName');
+                if (activeUserName) {
+                    document.getElementById('buy-name').value = activeUserName;
+                }
+                buyModal.style.display = 'block';
+            }
         });
     }
 
@@ -224,36 +263,132 @@ document.addEventListener('DOMContentLoaded', () => {
         buyForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const name = document.getElementById('buy-name').value;
-            const phone = document.getElementById('buy-phone').value;
+            const name = document.getElementById('buy-name').value.trim();
+            const phone = document.getElementById('buy-phone').value.trim();
+            const comment = document.getElementById('buy-comment').value.trim();
+            
+            // Проверка обязательных полей
+            if (!name) {
+                alert("Пожалуйста, введите ваше имя!");
+                document.getElementById('buy-name').focus();
+                return;
+            }
+            if (!phone) {
+                alert("Пожалуйста, введите ваш телефон!");
+                document.getElementById('buy-phone').focus();
+                return;
+            }
+            
+            // Базовая валидация телефона
+            const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+            if (!phoneRegex.test(phone)) {
+                alert("Пожалуйста, введите корректный номер телефона!");
+                document.getElementById('buy-phone').focus();
+                return;
+            }
+            
+            // Подготовка данных заказа
+            const orderData = {
+                name,
+                phone,
+                comment: comment || "Нет комментария",
+                items: JSON.stringify(cart)
+            };
+            
+            console.log("Отправка заказа:", orderData);
             
             try {
+                // Показываем индикатор загрузки
+                const submitBtn = buyForm.querySelector('.submit-btn');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = "Отправка...";
+                submitBtn.disabled = true;
+                
+                // Отправка на сервер
                 let response = await fetch('/order', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ name, phone, items: JSON.stringify(cart) })
+                    body: JSON.stringify(orderData)
                 });
+                
                 let result = await response.json();
+                console.log("Ответ сервера:", result);
+                
                 if (result.success) {
-                    alert("Заказ успешно сохранен в базу данных!");
+                    alert(`✅ Заказ успешно оформлен! Номер вашего заказа: #${result.orderId || '---'}\nНаш менеджер свяжется с вами в ближайшее время.`);
+                    
+                    // Очищаем корзину
                     cart = [];
                     localStorage.removeItem('technoCart');
-                    location.reload();
+                    
+                    // Закрываем модальное окно
+                    if (buyModal) buyModal.style.display = 'none';
+                    
+                    // Сбрасываем форму
+                    buyForm.reset();
+                    
+                    // Обновляем страницу
+                    updateCartCounter();
+                    if (cartTableBody) renderCartPage();
+                    
+                    // Показываем сообщение об успехе на странице корзины
+                    if (document.querySelector('.cart-page-content')) {
+                        cartTableBody.innerHTML = `
+                            <tr>
+                                <td colspan="4" style="text-align:center; padding: 40px;">
+                                    <h3 style="color: #28a745;">✅ Заказ оформлен!</h3>
+                                    <p style="color: #ccc; margin: 15px 0;">Спасибо за заказ! Мы скоро свяжемся с вами для подтверждения.</p>
+                                    <p style="color: #888; font-size: 0.9em;">Номер заказа: ${result.orderId || '---'}</p>
+                                    <a href="index.html" style="color: #007bff; text-decoration: none; display: inline-block; margin-top: 15px;">
+                                        ← Вернуться в магазин
+                                    </a>
+                                </td>
+                            </tr>
+                        `;
+                        document.getElementById('cart-total-sum').textContent = "0 руб.";
+                        if (checkoutPageBtn) checkoutPageBtn.style.display = 'none';
+                    }
+                } else {
+                    alert("❌ Ошибка при оформлении заказа: " + (result.message || "Попробуйте еще раз"));
                 }
-            } catch (err) { alert("Ошибка при отправке в базу данных"); }
+                
+            } catch (err) { 
+                console.error("Ошибка при отправке заказа:", err);
+                alert("❌ Ошибка соединения с сервером. Проверьте интернет-соединение."); 
+            } finally {
+                // Восстанавливаем кнопку
+                const submitBtn = buyForm.querySelector('.submit-btn');
+                if (submitBtn) {
+                    submitBtn.textContent = originalText || "Оформить заказ";
+                    submitBtn.disabled = false;
+                }
+            }
         });
     }
 
-    // Закрытие модалок
+    // Закрытие модальных окон
     closeBtns.forEach(btn => btn.addEventListener('click', () => {
         if(authModal) authModal.style.display = 'none';
         if(buyModal) buyModal.style.display = 'none';
     }));
 
+    // Закрытие по клику вне окна
+    window.addEventListener('click', (e) => {
+        if (e.target === authModal) authModal.style.display = 'none';
+        if (e.target === buyModal) buyModal.style.display = 'none';
+    });
+
+    // Карта Яндекс (если есть на странице)
     if (document.getElementById('map') && typeof ymaps !== 'undefined') {
         ymaps.ready(() => {
-            var myMap = new ymaps.Map("map", { center: [55.759082, 37.611171], zoom: 15 });
+            var myMap = new ymaps.Map("map", { 
+                center: [55.759082, 37.611171], 
+                zoom: 15 
+            });
             myMap.geoObjects.add(new ymaps.Placemark([55.759082, 37.611171]));
         });
     }
+
+    // Инициализация при загрузке
+    updateCartCounter();
 });
