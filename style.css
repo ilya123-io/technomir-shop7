@@ -148,12 +148,7 @@ input.auth-input::placeholder { color: #777; }
 .product-info .price { font-size: 2.5em; font-weight: 800; color: #ffffff; margin-bottom: 20px; text-align: left; display: block; }
 
 footer { text-align: center; padding: 40px 20px; margin-top: 60px; background: #1e1e1e; color: #888; border-top: 1px solid #333; margin-bottom: 0; }
-.features { margin-top: 60px; padding: 40px 0; border-top: 1px solid #333; }
-.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px; }
-.feature-item { background: linear-gradient(145deg, #1e1e1e, #2a2a2a); padding: 25px; border-radius: 12px; border: 1px solid #333; text-align: center; transition: transform 0.3s ease, border-color 0.3s ease; }
-.feature-item:hover { transform: translateY(-5px); border-color: #007bff; }
-.feature-item h3 { color: #00AFFF; margin: 0 0 15px 0; font-size: 1.3em; }
-.feature-item p { color: #ccc; margin: 0; line-height: 1.5; }
+
 main { animation: fadeIn 0.8s ease-out; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -168,7 +163,7 @@ main { animation: fadeIn 0.8s ease-out; }
     .contact-card-glass { padding: 30px; }
 }
 
-/* --- АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ (ИСПРАВЛЕНО) --- */
+/* --- АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ */
 @media (max-width: 768px) {
     /* Шапка */
     header { height: auto; flex-direction: column; padding: 15px; gap: 15px; }
