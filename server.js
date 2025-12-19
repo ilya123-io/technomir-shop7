@@ -23,28 +23,71 @@ pool.query('SELECT NOW()', (err, res) => {
     }
 });
 
-// Создание таблиц при запуске
-pool.query(`
-    CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY, 
-        name TEXT, 
-        email TEXT UNIQUE, 
-        password TEXT
-    );
-    
-    CREATE TABLE IF NOT EXISTS orders (
-        id SERIAL PRIMARY KEY, 
-        name TEXT NOT NULL, 
-        phone TEXT NOT NULL, 
-        comment TEXT DEFAULT '',
-        items TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-`).then(() => {
-    console.log('✅ Таблицы созданы или уже существуют');
-}).catch(err => {
-    console.error('❌ Ошибка создания таблиц:', err.message);
-});
+// Создание/проверка таблиц с добавлением недостающих колонок
+async function initializeDatabase() {
+    try {
+        // 1. Создаем таблицу users
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS users (
+                id SERIAL PRIMARY KEY, 
+                name TEXT, 
+                email TEXT UNIQUE, 
+                password TEXT
+            )
+        `);
+        console.log('✅ Таблица users создана/проверена');
+
+        // 2. Создаем таблицу orders (если не существует)
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS orders (
+                id SERIAL PRIMARY KEY, 
+                name TEXT NOT NULL, 
+                phone TEXT NOT NULL,
+                items TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+        console.log('✅ Таблица orders создана/проверена');
+
+        // 3. Проверяем и добавляем колонку comment, если её нет
+        const checkColumnQuery = `
+            SELECT column_name 
+            FROM information_schema.columns 
+            WHERE table_name = 'orders' 
+            AND column_name = 'comment'
+        `;
+        
+        const columnCheck = await pool.query(checkColumnQuery);
+        
+        if (columnCheck.rows.length === 0) {
+            // Колонки comment нет - добавляем её
+            await pool.query(`ALTER TABLE orders ADD COLUMN comment TEXT DEFAULT ''`);
+            console.log('✅ Колонка comment добавлена в таблицу orders');
+        } else {
+            console.log('✅ Колонка comment уже существует в таблице orders');
+        }
+
+        // 4. Также проверим колонку address (на всякий случай)
+        const checkAddressColumn = await pool.query(`
+            SELECT column_name 
+            FROM information_schema.columns 
+            WHERE table_name = 'orders' 
+            AND column_name = 'address'
+        `);
+        
+        if (checkAddressColumn.rows.length > 0) {
+            // Колонка address есть - удалим её, так как мы используем только comment
+            await pool.query(`ALTER TABLE orders DROP COLUMN IF EXISTS address`);
+            console.log('✅ Колонка address удалена из таблицы orders (используем только comment)');
+        }
+
+    } catch (err) {
+        console.error('❌ Ошибка инициализации базы данных:', err.message);
+    }
+}
+
+// Инициализируем базу данных при старте
+initializeDatabase();
 
 // Регистрация пользователя
 app.post('/register', async (req, res) => {
@@ -121,7 +164,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Оформление заказа
+// Оформление заказа (обновленная версия - используем comment вместо address)
 app.post('/order', async (req, res) => {
     const { name, phone, comment = '', items = '[]' } = req.body;
     
@@ -149,6 +192,17 @@ app.post('/order', async (req, res) => {
     }
     
     try {
+        // Проверяем структуру таблицы перед вставкой
+        const tableInfo = await pool.query(`
+            SELECT column_name 
+            FROM information_schema.columns 
+            WHERE table_name = 'orders' 
+            ORDER BY ordinal_position
+        `);
+        
+        console.log('Структура таблицы orders:', tableInfo.rows.map(r => r.column_name));
+        
+        // Вставляем заказ
         const result = await pool.query(
             `INSERT INTO orders (name, phone, comment, items) 
              VALUES ($1, $2, $3, $4) 
@@ -171,19 +225,54 @@ app.post('/order', async (req, res) => {
         
     } catch (err) { 
         console.error('❌ Ошибка сохранения заказа:', err.message);
-        res.status(500).json({ 
-            success: false, 
-            message: 'Ошибка при сохранении заказа: ' + err.message 
-        }); 
+        console.error('Детали ошибки:', err);
+        
+        // Если ошибка связана с колонкой, попробуем альтернативный запрос
+        if (err.message.includes('column "comment"')) {
+            try {
+                // Пробуем вставить без колонки comment
+                console.log('Попытка вставить заказ без колонки comment...');
+                const result = await pool.query(
+                    `INSERT INTO orders (name, phone, items) 
+                     VALUES ($1, $2, $3) 
+                     RETURNING id, created_at`,
+                    [name.trim(), phone.trim(), items]
+                );
+                
+                const orderId = result.rows[0].id;
+                console.log(`✅ Заказ сохранён без комментария! ID: ${orderId}`);
+                
+                res.json({ 
+                    success: true, 
+                    message: `Заказ №${orderId} оформлен (комментарий не сохранён)`,
+                    orderId: orderId
+                });
+            } catch (secondErr) {
+                res.status(500).json({ 
+                    success: false, 
+                    message: 'Ошибка базы данных: ' + secondErr.message 
+                });
+            }
+        } else {
+            res.status(500).json({ 
+                success: false, 
+                message: 'Ошибка при сохранении заказа: ' + err.message 
+            });
+        }
     }
 });
 
 // Получение списка заказов (для админки)
 app.get('/orders', async (req, res) => {
     try {
-        const result = await pool.query(
-            'SELECT id, name, phone, comment, created_at FROM orders ORDER BY id DESC LIMIT 50'
-        );
+        const result = await pool.query(`
+            SELECT id, name, phone, 
+                   COALESCE(comment, '') as comment, 
+                   created_at 
+            FROM orders 
+            ORDER BY id DESC 
+            LIMIT 50
+        `);
         res.json({ 
             success: true, 
             orders: result.rows,
@@ -191,6 +280,29 @@ app.get('/orders', async (req, res) => {
         });
     } catch (err) {
         console.error('Ошибка получения заказов:', err);
+        res.status(500).json({ 
+            success: false, 
+            message: err.message 
+        });
+    }
+});
+
+// Получение структуры таблицы orders (для отладки)
+app.get('/debug/orders-structure', async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT column_name, data_type, is_nullable
+            FROM information_schema.columns 
+            WHERE table_name = 'orders' 
+            ORDER BY ordinal_position
+        `);
+        res.json({ 
+            success: true, 
+            table: 'orders',
+            columns: result.rows
+        });
+    } catch (err) {
+        console.error('Ошибка проверки структуры:', err);
         res.status(500).json({ 
             success: false, 
             message: err.message 
@@ -220,7 +332,8 @@ app.get('/health', (req, res) => {
     res.json({ 
         status: 'OK', 
         timestamp: new Date().toISOString(),
-        service: 'ТехноМир API'
+        service: 'ТехноМир API',
+        tables: ['users', 'orders']
     });
 });
 
@@ -229,4 +342,10 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`✅ Сервер запущен на порту ${PORT}`);
     console.log(`👉 Доступен по адресу: http://localhost:${PORT}`);
+    console.log('📊 Проверка структуры таблиц...');
+    
+    // Дополнительная проверка при старте
+    setTimeout(() => {
+        initializeDatabase();
+    }, 1000);
 });
