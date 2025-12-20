@@ -113,6 +113,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = emailInput.value.trim();
             const password = passwordInput.value.trim();
 
+            // --- НОВАЯ ВАЛИДАЦИЯ ---
+            if (isRegisterMode) {
+                const confirmPassword = confirmPasswordInput.value.trim();
+
+                // Проверка длины пароля
+                if (password.length < 6) {
+                    alert("⚠️ Пароль слишком короткий! Минимум 6 символов.");
+                    return;
+                }
+
+                // Проверка совпадения паролей
+                if (password !== confirmPassword) {
+                    alert("⚠️ Пароли не совпадают! Проверьте ввод.");
+                    return;
+                }
+            }
+            // -----------------------
+
             const url = isRegisterMode ? '/register' : '/login';
             const bodyData = isRegisterMode 
                 ? { name: nameInput.value.trim(), email, password } 
@@ -130,6 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert("✅ Регистрация успешна! Теперь войдите.");
                         isRegisterMode = false; 
                         updateAuthUI();
+                        // Очистка полей пароля для безопасности
+                        passwordInput.value = '';
+                        confirmPasswordInput.value = '';
                     } else {
                         localStorage.setItem('activeUserName', result.name);
                         location.reload();
@@ -175,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const imgElem = productCard.querySelector('img');
                 img = imgElem ? imgElem.src : '';
             } else if (productDetails) {
-                // Если на странице товара (monitor.html, notebook.html и т.д.)
+                // Если на странице товара
                 name = productDetails.querySelector('h1').innerText;
                 const priceText = productDetails.querySelector('.price').innerText;
                 price = parseInt(priceText.replace(/\D/g, ''));
@@ -241,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 4. ОФОРМЛЕНИЕ ЗАКАЗА (исправленная версия)
+    // 4. ОФОРМЛЕНИЕ ЗАКАЗА
     if (checkoutPageBtn) {
         checkoutPageBtn.addEventListener('click', () => {
             if (cart.length === 0) { 
