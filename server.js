@@ -25,7 +25,6 @@ pool.query(`
         phone TEXT NOT NULL,
         comment TEXT,
         items TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 `);
 
