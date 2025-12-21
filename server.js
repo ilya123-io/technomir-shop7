@@ -25,7 +25,6 @@ pool.query(`
         phone TEXT NOT NULL,
         comment TEXT,
         items TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 `);
 
@@ -58,7 +57,7 @@ app.post('/order', async (req, res) => {
     
     try {
         await pool.query(
-            'INSERT INTO orders (name, phone, comment, items, created_at) VALUES ($1, $2, $3, $4)', 
+            'INSERT INTO orders (name, phone, comment, items) VALUES ($1, $2, $3, $4)', 
             [name, phone, comment, items]
         );
         res.json({ success: true });
