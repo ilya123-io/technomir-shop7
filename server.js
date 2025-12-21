@@ -24,7 +24,7 @@ pool.query(`
         name TEXT NOT NULL, 
         phone TEXT NOT NULL,
         comment TEXT,
-        items TEXT,
+        items TEXT
     );
 `);
 
